@@ -1,0 +1,52 @@
+#include <iostream>
+using namespace std;
+int gcd(int a,int b){
+    if(a==0){return b;}
+    return gcd(b%a,a);
+}
+class fraction{
+    private:
+    int numerator;
+    int denominator;
+    public:
+    void setnumerator(int numerator){
+        this->numerator=numerator;
+    }
+    void setdenominator(int denominator){
+        this->denominator=denominator;
+    }
+    int getdenominator(){
+        return denominator;
+    }
+    int getnumerator(){
+        return numerator;
+    }
+    fraction(int numerator,int denominator=1){
+        this->numerator=numerator;
+        this->denominator=denominator;
+    }
+    fraction operator+(fraction &f2){
+        int n=this->numerator*f2.getdenominator() + this->denominator*f2.getnumerator();
+        int d=f2.getdenominator()*this->denominator;
+        fraction f(n,d);
+        return f;
+    }
+    fraction simplify(fraction &F){
+        int a=F.getnumerator();
+        int b=F.getdenominator();
+        int c=gcd(a,b);
+        a=a/c;
+        b=b/c;
+        F.setdenominator(b);
+        F.setnumerator(a);
+        return F;
+    }
+};
+int main() {
+	fraction f1(3,8);
+	fraction f2(1,4);
+	fraction f=f1+f2;
+	f=f.simplify(f);
+	cout<<f.getnumerator()<<" / "<<f.getdenominator()<<endl;
+	return 0;
+}
